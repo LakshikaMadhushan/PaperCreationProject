@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body onload="loadTeacherName()">
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="#">Exam Generator</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="http://localhost:8080/paper_view">View Paper</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="http://localhost:8080/paper_create">Create Paper</a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="row mt-3">
+        <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <label class="navbar-brand" href="#">
+<!--                    <img src=""-->
+<!--                         width="30" height="30" class="d-inline-block align-top" alt="">-->
+                    Create Paper
+                </label>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="container">
+                            <form>
+                                <div class="row m-2">
+                                    <div class="form-group col-md-3">
+                                        <label for="teacherNameCombo">Select Teacher</label>
+                                        <select class="form-control" id="teacherNameCombo">
+                                        </select>
+                                    </div>
+
+
+                                    <div class="form-group col-md-2">
+                                        <label for="paperNameInput">Paper Name</label>
+                                        <input type="text" class="form-control" id="paperNameInput" name="paperNameInput"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="questionCountInput">Questions Count</label>
+                                        <input type="text" class="form-control" id="questionCountInput" name="questionCountInput"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="answersInput">Answers</label>
+                                        <input type="text" class="form-control" id="answersInput" name="answersInput"
+                                               placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <button style="margin-top: 24px" type="button" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="addQuestionInput">Add Questions</label>
+                                        <textarea id="addQuestionInput" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Answer 1</label>
+                                        <input type="text" class="form-control" id="answerInput1">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Answer 2</label>
+                                        <input type="text" class="form-control" id="answerInput2">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label>Answer 3</label>
+                                        <input type="text" class="form-control" id="answerInput3">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label>Answer 4</label>
+                                        <input type="text" class="form-control" id="answerInput4">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Select Correct Answer :</label>
+                                    <div class="input-group col-sm-5">
+                                        <select id="correctAnswer" class="form-control">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <button type="button" id="btnAddToQuestion" class="btn btn-warning">Add Question</button>
+
+
+
+                                <hr>
+
+                                <div class="form-row" id="cardDiv">
+                                    <!--                                        <div class="card" style="width: 25rem;">-->
+                                    <!--                                            <div class="card-body">-->
+                                    <!--                                                <h4 class="card-title">Question One</h4>-->
+                                    <!--                                                <h5 class="card-subtitle mt-2 text-muted">Answer One</h5>-->
+                                    <!--                                                <h5 class="card-subtitle mt-2 text-muted">Answer One</h5>-->
+                                    <!--                                                <h5 class="card-subtitle mt-2 text-muted">Answer One</h5>-->
+                                    <!--                                                <h5 class="card-subtitle mt-2 text-muted">Answer One</h5>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary float-right" onclick="savePaper()"  type="button">Submit Paper</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<div class="footer-copyright text-center py-3 bg-secondary mt-3 text-white">© 2021 Ceyentra:
+
+</div>
+
+<!--<script rel="script" type="application/javascript" src="/static.dist/bootstrap/js/bootstrap.min.js"></script>-->
+<!--<script rel="script" type="application/javascript" src="/static.dist/jquery/jquery.min.js"></script>-->
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script>
+
+    let questionList = new Array();
+    let appendIndex = 0;
+
+    function addToQuestion() {
+
+        let answerList = new Array();
+
+        for (let i = 1;i <=4 ;i++){
+            let text = $('#answerInput'+i).val();
+            answerList.push({
+                answer : text
+            });
+        }
+
+        // answerList.push({
+        //    answerOne : $('#answerOneInput').val(),
+        //    answerTwo : $('#answerTwoInput').val(),
+        //    answerThree : $('#answerThreeInput').val(),
+        //    answerFour : $('#answerFourInput').val()
+        // });
+
+        questionList.push({
+            question : $('#addQuestionInput').val(),
+            correct_answer : $('#correctAnswer').val(),
+            answerDTOList : answerList
+        });
+
+        appendCard(); // call append card function
+        clearQuestionText(); // call clean function
+    }
+
+    // click question add button function
+    $('#btnAddToQuestion').click(function () {
+        addToQuestion();
+    });
+
+    // question card append
+    function appendCard() {
+
+        $('#cardDiv').empty();
+
+        let no = 1;
+        for (let i in questionList){
+            let data = questionList[i];
+            let question = data.question;
+            let correctAnswer = data.correctAnswer;
+            let answers = data.answerDTOList;
+
+            let answerRow = '';
+
+            for (let j in answers){
+                let temp = answers[j];
+                let answerOne = temp.answer;
+
+                answerRow += '<h6 class="card-subtitle mt-2 text-muted"> 01).'+ answerOne +'</h6>\n';
+            }
+
+            let row = '<div class="card" style="width: 100rem;margin-bottom: 15px;background: lightgrey">\n' +
+                '                                            <div class="card-body">\n' +
+                '                                                <h5 class="card-title">'+ no +"). "+question +'</h5>\n' +
+                answerRow +
+                '                                            </div>\n' +
+                '                                        </div>';
+
+            $('#cardDiv').append(row);
+            no += 1;
+        }
+    }
+
+    // function clean
+    function clearQuestionText() {
+        $('#addQuestionInput').val('');
+        $('#answerInput1').val('');
+        $('#answerInput2').val('');
+        $('#answerInput3').val('');
+        $('#answerInput4').val('');
+    }
+
+
+    //load teacher Name to combo box
+
+    function loadTeacherName() {
+        $.ajax({
+            url: "http://localhost:8080/teacher",
+            dataType: 'json',
+            method: "get",
+            success: function (res) {
+                let data = res.data;
+                for (var i in data) {
+                    var row='<option value="'+data[i].teacher_id+'">'+data[i].name+'</option>';
+                    $('#teacherNameCombo').append(row);
+
+                }
+            }
+        });
+    }
+
+    function savePaper() {
+
+        let object = {
+            p_name : $('#paperNameInput').val(),
+            teacher : $('#teacherNameCombo').val(),
+            questionDTOList : questionList
+        };
+
+        let data = JSON.stringify(object);
+        $.ajax({
+            type: 'POST',
+            url:  "http://localhost:8080/paper/save",
+            enctype: 'multipart/form-data',
+            contentType: 'application/json; charset= utf-8',
+            processData: false,
+            async: true,
+            data: [data],
+            dataType: 'json',
+            success: function (data) {
+                clearAll();
+                alert('Paper Created Successfully');
+            },
+            error: function (data) {
+                alert('Failed');
+            }
+        });
+
+    }
+
+    function clearAll(){
+
+        questionList = [];
+        loadTeacherName();
+        $('#paperNameInput').val('');
+        $('#questionCountInput').val('');
+        $('#answersInput').val('');
+        $('#cardDiv').empty();
+
+    }
+
+</script>
+</body>
+</html>

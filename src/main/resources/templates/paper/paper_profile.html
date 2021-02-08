@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <a class="navbar-brand" href="#">Exam Generator</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+                <a class="nav-link" href="http://localhost:8080/paper_view">View Paper</a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="http://localhost:8080/paper_create">Create Paper</a>
+            </li>
+
+
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="row mt-3">
+        <div class="container">
+            <nav class="navbar navbar-light bg-light">
+                <label class="navbar-brand" href="#">
+<!--                    <img src=""-->
+<!--                         width="30" height="30" class="d-inline-block align-top" alt="">-->
+                    Paper Sheet
+                </label>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="container">
+            <div class="col-12" style="display: flex">
+                <div class="col-5">
+                    <h6>Paper Name :</h6>
+                </div>
+                <div class="col-5">
+                    <h6>Paper Name :</h6>
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="container">
+                            <div class="row" id="questionBody">
+<!--                                <div class="card" style="width: 100%">-->
+<!--                                    <div class="card-body">-->
+<!--                                        <h5 class="card-title">Question</h5>-->
+<!--                                        <div class="form-check">-->
+<!--                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">-->
+<!--                                            <label class="form-check-label" for="defaultCheck1">-->
+<!--                                                Default checkbox-->
+<!--                                            </label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="btnAddToQuestion" onclick="addAnswers()" class="btn btn-warning">Submit Now</button>
+            </div>
+
+            <!--Submit Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Submit E-Mail</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="staticEmail" class="col-sm-2 col-form-label">Student Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="staticEmail">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="submitPaper()" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<div class="footer-copyright text-center py-3 bg-secondary mt-3 text-white">© 2021 Ceyetra:
+
+</div>
+
+<!--<script rel="script" type="application/javascript" src="/static.dist/bootstrap/js/bootstrap.min.js"></script>-->
+<!--<script rel="script" type="application/javascript" src="/static.dist/jquery/jquery.min.js"></script>-->
+<!-- Latest compiled and minified JavaScript -->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    let questionCount = new Array();
+    //append questions And answers
+
+    let answeredQuestion = new Array();
+
+
+    loadQuestions();
+
+
+
+    function loadQuestions() {
+
+        let paperId = getUrlParam('id',0);
+
+     //loadQuestion
+        $.ajax({
+            url: "http://localhost:8080/question/getAllQuestionByPaperId/"+paperId,
+            dataType: 'json',
+            method: "get",
+            success: function (res) {
+                let data = res.data;
+                $('#questionBody').empty();
+
+                let questionNo = 1;
+                let answerNo = 1;
+                for (let i    in data){
+                    let question = data[i];
+                    let questionId = question.q_id;
+                    let questionName = question.question;
+                    let answersList = question.answerDTOList;
+
+
+                    let answerRow = '';
+
+                    let answerCount = 0;
+
+                    for (let j in answersList){
+                        let answer = answersList[j];
+                        let answerId = answer.a_id;
+                        let answerName = answer.answer;
+
+                        if (questionId === answer.question_id ){
+
+                            answerCount = answerCount + 1;
+
+                            answerRow += '<div class="form-check">\n' +
+                                '                                            <input class="form-check-input" type="checkbox" value="" id="answ'+ questionId+'_'+answerNo +'">\n' +
+                                '                                            <label class="form-check-label" for="defaultCheck1">\n' +
+                                '                                                '+ answerNo+') '+answerName +'\n' +
+                                '                                            </label>\n' +
+                                '                                        </div>\n';
+                            answerNo += 1;
+                        }
+
+                    }
+
+                    questionCount[questionId] = {
+                        questionId : questionId,
+                        answerCount : answerCount
+                    };
+
+                    let row = '<div class="card" style="width: 100%">\n' +
+                        '                                    <div class="card-body">\n' +
+                        '                                        <h5 class="card-title">'+ questionNo+ ') ' +questionName +'</h5>\n' +
+                        answerRow +
+                        '<input type="text" id="que_'+ questionId +'" style="display: none" value="'+ questionId +'">\n'+
+                        '                                    </div>\n' +
+                        '                                </div>';
+                    questionNo += 1;
+
+                    $('#questionBody').append(row);
+                    answerNo = 1;
+                }
+            }
+        });
+    }
+
+    function addAnswers(){
+
+        $('#exampleModal').modal('show');
+
+        let paper_id = getUrlParam('id',0);
+
+        for (let i in questionCount){
+
+            let count = questionCount[i].answerCount;
+            let questionId = questionCount[i].questionId;
+
+            for (let i = 1 ;i <= count ; i++){
+
+                if ($('#answ'+questionId+'_'+i).is(":checked")){
+                    answeredQuestion.push({
+                        submit_answer : i,
+                        question_id : questionId,
+                        paper_id : paper_id
+                    });
+                }
+            }
+        }
+    }
+
+    function getUrlParam(parameter, defaultvalue) {
+        let urlParameter = defaultvalue;
+        if (window.location.href.indexOf(parameter) > -1) {
+            urlParameter = getUrlVars()[parameter];
+        }
+        return urlParameter;
+    }
+
+    // Get Profile ID from URL
+    function getUrlVars() {
+        const vars = {};
+        const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+    function submitPaper(){
+
+        let email = $('#staticEmail').val();
+        if (email !== ''){
+
+            let object = {
+                studentMail : email,
+                markSheetDTOS : answeredQuestion
+            }
+
+            let data = JSON.stringify(object);
+            $.ajax({
+                type: 'POST',
+                url:  "http://localhost:8080/mark_sheet/save",
+                enctype: 'multipart/form-data',
+                contentType: 'application/json; charset= utf-8',
+                processData: false,
+                async: true,
+                data: [data],
+                dataType: 'json',
+                success: function (data) {
+                    window.location.replace('http://localhost:8080/paper_view');
+                },
+                error: function (data) {
+                    alert('Failed');
+                }
+            });
+
+        }else{
+            $('#staticEmail').focus();
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
